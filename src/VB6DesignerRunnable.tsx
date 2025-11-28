@@ -22,6 +22,8 @@ import {
   Select,
   Checkbox,
   Table,
+  MenuList,
+  MenuListItem,
 } from "react95";
 
 // icons (react95 icons package)
@@ -36,6 +38,7 @@ const CONTROL_TYPES = {
   button: {
     label: "Button",
     // icon: <AppWizard variant="32x32_4" />,
+    icon: <img src="/button.png" alt="" style={{ width: 37, height: 32 }} />,
     element: ({ text, handlers, styleProps }) => (
       <Button {...(handlers || {})} style={{ width: "100%", height: "100%", ...styleProps }}>
         {text || "Button"}
@@ -44,7 +47,7 @@ const CONTROL_TYPES = {
   },
   label: {
     label: "Label",
-    icon: <Write1 variant="32x32_4" />,
+    icon: <img src="/label.png" alt="" style={{ width: 32, height: 32 }} />,
     element: ({ text, handlers, styleProps }) => (
       <div
         {...(handlers || {})}
@@ -65,7 +68,8 @@ const CONTROL_TYPES = {
   },
   textbox: {
     label: "TextBox",
-    icon: <Brush variant="32x32_4" />,
+    // icon: <Write1 variant="32x32_4" />,
+    icon: <img src="/text.png" alt="" style={{ width: 32, height: 32 }} />,
     element: ({ text, handlers, styleProps }) => (
       <input
         type="text"
@@ -84,22 +88,43 @@ const CONTROL_TYPES = {
   },
   combobox: {
     label: "ComboBox",
-    icon: <ReaderClosed variant="32x32_4" />,
+    // icon: <ReaderClosed variant="32x32_4" />,
+    icon: <img src="/combo.png" alt="" style={{ width: 32, height: 32 }} />,
     element: ({ text, handlers, styleProps }) => (
-      <Select
-        {...(handlers || {})}
-        defaultValue={text || "Option 1"}
-        options={[
-          { value: "Option 1", label: "Option 1" },
-          { value: "Option 2", label: "Option 2" },
-          { value: "Option 3", label: "Option 3" }
-        ]}
-        style={{ width: "100%", height: "100%", ...styleProps }}
-      />
+      // <Select
+      //   {...(handlers || {})}
+      //   defaultValue={text || "Option 1"}
+      //   options={[
+      //     { value: "Option 1", label: "Option 1" },
+      //     { value: "Option 2", label: "Option 2" },
+      //     { value: "Option 3", label: "Option 3" }
+      //   ]}
+      //   style={{ width: "100%", height: "100%", ...styleProps }}
+      // />
+        <select
+                {...(handlers || {})}
+                defaultValue={text || "Option 1"}
+                // onChange={(e) =>
+                //   setFormValues({ ...formValues, category: e.target.value })
+                // }
+                // style={{
+                //   width: "100%",
+                //   padding: "4px",
+                //   border: "2px inset #808080",
+                //   background: "white",
+                //   fontFamily: "ms_sans_serif",
+                //   fontSize: 12,
+                // }}
+                style={{ width: "100%", height: "100%", ...styleProps }}
+              >
+                <option value="Electronics">Electronics</option>
+                <option value="Furniture">Furniture</option>
+                </select>
     ),
   },
   checkbox: {
     label: "CheckBox",
+    icon: <img src="/check.png" alt="" style={{ width: 32, height: 32 }} />,
     element: ({ text, handlers, styleProps }) => (
       <Checkbox
         {...(handlers || {})}
@@ -111,7 +136,8 @@ const CONTROL_TYPES = {
   },
   table: {
     label: "Table",
-    icon: <Mspaint variant="32x32_4" />,
+    // icon: <Mspaint variant="32x32_4" />,
+    icon: <img src="/table.png" alt="" style={{ width: 32, height: 32 }} />,
     element: ({ text, handlers, styleProps }) => (
       <Table
         {...(handlers || {})}
@@ -142,6 +168,7 @@ const CONTROL_TYPES = {
   frame: {
     label: "Frame",
     icon: <WindowsExplorer variant="32x32_4" />,
+    // icon: <img src="/picture.png" alt="" style={{ width: 32, height: 32 }} />, 
     element: ({ text, handlers, styleProps }) => (
       <GroupBox
         {...(handlers || {})}
@@ -152,6 +179,56 @@ const CONTROL_TYPES = {
       </GroupBox>
     ),
   },
+  image: {
+    label: "Image",
+    icon: <img src="/picture.png" alt="" style={{ width: 32, height: 32 }} />,
+    element: ({ text, handlers, styleProps }) => (
+      <div
+        {...(handlers || {})}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "2px inset #808080",
+          background: "#ffffff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+          ...styleProps,
+        }}
+      >
+        {text && text.startsWith("http") ? (
+          <img
+            src={text}
+            alt="Preview"
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              objectFit: "contain",
+            }}
+          />
+        ) : (
+          <div style={{ fontSize: 10, color: "#808080", textAlign: "center" }}>
+            Image
+            <br />
+            (Set URL in Caption)
+          </div>
+        )}
+      </div>
+    ),
+  },
+  // menulist: {
+  //   label: "MenuList",
+  //   icon: <img src="/menu.png" alt="" style={{ width: 32, height: 32 }} />,
+  //   element: ({ text, handlers, styleProps }) => (
+  //     <MenuList {...(handlers || {})} style={{ width: "100%", height: "100%", ...styleProps }}>
+  //       <MenuListItem>File</MenuListItem>
+  //       <MenuListItem>Edit</MenuListItem>
+  //       <MenuListItem>View</MenuListItem>
+  //       <MenuListItem>Help</MenuListItem>
+  //     </MenuList>
+  //   ),
+  // },
 };
 
 /* ---------- helper: runtime handler compiler ---------- */
@@ -304,7 +381,7 @@ export default function VB6DesignerRunnable() {
 
   // floating window rects
   const [toolboxRect, setToolboxRect] = useState({ x: 16, y: 56, w: 180, h: 260 });
-  const [propertiesRect, setPropertiesRect] = useState({ x: 920, y: 56, w: 420, h: 330 });
+  const [propertiesRect, setPropertiesRect] = useState({ x: 920, y: 56, w: 420, h: 450 });
   const [codeRect, setCodeRect] = useState({ x: 920, y: 400, w: 420, h: 420 });
   const [formRect, setFormRect] = useState({ x: 220, y: 56, w: 760, h: 640 });
 
@@ -330,6 +407,12 @@ export default function VB6DesignerRunnable() {
     } else if (type === 'frame') {
       width = 200;
       height = 150;
+    } else if (type === 'image') {
+      width = 150;
+      height = 150;
+    } else if (type === 'menulist') {
+      width = 200;
+      height = 120;
     }
     
     const ctrl = {
@@ -340,6 +423,7 @@ export default function VB6DesignerRunnable() {
       width,
       height,
       text: CONTROL_TYPES[type].label,
+      fontSize: 12,
       handlers: {}, // optional per-control default handlers stored in events as well; kept here for convenience
     };
     setControls((prev) => [...prev, ctrl]);
@@ -498,10 +582,10 @@ import { Button, TextField } from "react95";\n\n`;
           gap: 8,
           zIndex: 10000
         }}>
-          {/* <Button size="sm" onClick={() => setRunMode((r) => !r)} style={{ minWidth: 50, padding: "2px 8px" }}>
+           <Button size="sm" onClick={() => setRunMode((r) => !r)} style={{ minWidth: 50, padding: "2px 8px" }}>
             {runMode ? "Stop" : "Run"}  
-          </Button> */}
-          <Button onClick={() => setCurrentProject("InventoryApp")}>Run</Button>
+          </Button> 
+          {/* <Button onClick={() => setCurrentProject("InventoryApp")}>Run</Button> */}
           <Button onClick={() => setCurrentProject(null)}>Stop</Button>
           <Button size="sm" onClick={() => setControls([])} style={{ minWidth: 50, padding: "2px 8px" }}>
             Clear
@@ -509,12 +593,24 @@ import { Button, TextField } from "react95";\n\n`;
           <Button size="sm" onClick={handleSave} style={{ minWidth: 60, padding: "2px 8px" }}>
             <Diskcopy1 variant="16x16_4" /> Save
           </Button>
-          <label>
-            <input id={fileInputId} type="file" accept=".json" style={{ display: "none" }} onChange={(e) => handleLoad(e.target.files[0])} />
-            <Button size="sm" style={{ minWidth: 60, padding: "2px 8px" }}>
-              <FolderOpen variant="16x16_4" /> Load
-            </Button>
-          </label>
+          <input 
+            id={fileInputId} 
+            type="file" 
+            accept=".json" 
+            style={{ display: "none" }} 
+            onChange={(e) => {
+              if (e.target.files && e.target.files[0]) {
+                handleLoad(e.target.files[0]);
+              }
+            }} 
+          />
+          <Button 
+            size="sm" 
+            style={{ minWidth: 60, padding: "2px 8px" }}
+            onClick={() => document.getElementById(fileInputId)?.click()}
+          >
+            <FolderOpen variant="16x16_4" /> Load
+          </Button>
           <Button size="sm" onClick={generateReact95JSX} style={{ minWidth: 100, padding: "2px 8px" }}>
             Generate JSX
           </Button>
@@ -555,7 +651,7 @@ import { Button, TextField } from "react95";\n\n`;
                 {controls.map((c) => {
                   const CompDef = CONTROL_TYPES[c.type];
                   const handlers = runtimeHandlers(c.id); // compiled functions
-                  const styleProps = {}; // passed into element if needed
+                  const styleProps = { fontSize: c.fontSize || 12 }; // passed into element if needed
 
                   if (runMode) {
                     // runtime rendering without drag handles
@@ -606,13 +702,13 @@ import { Button, TextField } from "react95";\n\n`;
 
         {/* Floating Properties */}
         <Rnd size={{ width: propertiesRect.w, height: propertiesRect.h }} position={{ x: propertiesRect.x, y: propertiesRect.y }} bounds="parent" onDragStop={(e, d) => setPropertiesRect((r) => ({ ...r, x: d.x, y: d.y }))} onResizeStop={(e, dir, ref, delta, pos) => setPropertiesRect({ x: pos.x, y: pos.y, w: ref.offsetWidth, h: ref.offsetHeight })} minWidth={260} minHeight={220}>
-          <Window style={{ width: "100%", height: "100%" }}>
+          <Window style={{ width: "100%", height: "100%", background: "#c0c0c0" }}>
             <WindowHeader>Properties</WindowHeader>
-            <WindowContent>
+            <WindowContent style={{ background: "#c0c0c0" }}>
               {selected ? (
                 <>
                   <Fieldset label="Control Info">
-                    <div style={{ fontSize: 12 }}>
+                    <div style={{ fontSize: 12  }}>
                       <b>Type:</b> {selected.type}
                     </div>
                   </Fieldset>
@@ -643,6 +739,13 @@ import { Button, TextField } from "react95";\n\n`;
                         Height:
                         <TextField value={selected.height} onChange={(e) => updateControl(selected.id, { height: parseInt(e.target.value) || 20 })} />
                       </label>
+
+                      {(selected.type === 'label' || selected.type === 'textbox') && (
+                        <label>
+                          Font Size:
+                          <TextField value={selected.fontSize || 12} onChange={(e) => updateControl(selected.id, { fontSize: parseInt(e.target.value) || 12 })} />
+                        </label>
+                      )}
                     </div>
                   </GroupBox>
 

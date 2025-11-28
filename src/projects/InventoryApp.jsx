@@ -356,11 +356,11 @@ export default function InventoryApp() {
           default={{ x: 1060, y: 60, width: 320, height: 400 }}
           dragHandleClassName="drag-handle"
         >
-          <Window style={{ width: "100%", height: "100%" }}>
+          <Window style={{ width: "100%", height: "100%", background: "#c0c0c0" }}>
             <WindowHeader className="drag-handle">
               Product Details
             </WindowHeader>
-            <WindowContent>
+            <WindowContent style={{ background: "#c0c0c0" }}>
               <div style={{ fontSize: 12, lineHeight: 1.8 }}>
                 <div>
                   <strong>Code:</strong> {selectedProduct.productCode}

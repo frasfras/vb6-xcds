@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { Window, WindowHeader, WindowContent, Button } from 'react95';
 import VB6DesignerRunnable from './VB6DesignerRunnable.tsx';
 import InventoryApp from './projects/InventoryApp.jsx';
+import ProductManager from './projects/ProductManagerExample.jsx';
+
 // import Vb6Ide from './Vb6Ide.jsx';
 
 // React95 CSS / Global Styles
@@ -101,6 +103,23 @@ const App = () => {
                   </span>
                 </Button>
 
+               {/* <Button 
+                  onClick={() => setCurrentApp('product')}
+                  style={{ 
+                    padding: '16px', 
+                    fontSize: 14,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    height: 'auto'
+                  }}
+                >
+                  <strong>Product Manager</strong>
+                  <span style={{ fontSize: 11, marginTop: 4 }}>
+                    Product  Management System
+                  </span>
+                </Button> */}
+
                 <div style={{ 
                   marginTop: 'auto', 
                   fontSize: 11, 
@@ -133,6 +152,21 @@ const App = () => {
         {currentApp === 'inventory' && (
           <div>
             <InventoryApp />
+            <div style={{
+              position: 'fixed',
+              top: 50,
+              left: 10,
+              zIndex: 20000
+            }}>
+              <Button onClick={() => setCurrentApp('launcher')}>
+                ← Back to Launcher
+              </Button>
+            </div>
+          </div>
+        )}
+        {currentApp === 'product' && (
+          <div>
+            <ProductManager />
             <div style={{
               position: 'fixed',
               top: 50,
