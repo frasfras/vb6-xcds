@@ -12,7 +12,7 @@ import VB6DesignerRunnable from './VB6DesignerRunnable.tsx';
 import InventoryApp from './projects/InventoryApp.jsx';
 import ProjectManagerApp from './projects/ProjectManagerApp.jsx';
 import LibraryApp from './projects/LibraryApp.jsx';
-import MyHtmlComponent from './MyHtmlComponent.jsx'
+import MyProjectMgrComponent from './MyProjectMgrComponent.jsx'
 
 // import Vb6Ide from './Vb6Ide.jsx';
 
@@ -223,7 +223,7 @@ const App = () => {
       }}
       title="My VB App"
     /> 
-     {/* <MyHtmlComponent /> */}
+     {/* <MyProjectMgrComponent /> */}
     <div style={{
       position: 'fixed',
       top: 10,

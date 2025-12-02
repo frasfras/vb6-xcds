@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyHtmlComponent = () => {
+const MyProjectMgrComponent = () => {
   return (
     <div style={{ width: '100vw', height: '100vh', background: '#008080' }}>
     <style>{`
@@ -435,4 +435,4 @@ const MyHtmlComponent = () => {
   );
 };
 
-export default MyHtmlComponent;
+export default MyProjectMgrComponent;

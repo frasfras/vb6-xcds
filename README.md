@@ -8,5 +8,5 @@ In the project directory, you can run:
 
 ### `npm start`
 
-an AI-powered racing coach chat interface to the Racing Line Visualizer. The chat appears as a collapsible sidebar that allows users to ask natural language questions about their lap telemetry. 
+VB6 Revival It is A 90s IDE with 2025 output built with React
 
