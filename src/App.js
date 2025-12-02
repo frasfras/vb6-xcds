@@ -10,7 +10,9 @@ import { useState } from 'react';
 import { Window, WindowHeader, WindowContent, Button } from 'react95';
 import VB6DesignerRunnable from './VB6DesignerRunnable.tsx';
 import InventoryApp from './projects/InventoryApp.jsx';
-import ProductManager from './projects/ProductManagerExample.jsx';
+import ProjectManagerApp from './projects/ProjectManagerApp.jsx';
+import LibraryApp from './projects/LibraryApp.jsx';
+import MyHtmlComponent from './MyHtmlComponent.jsx'
 
 // import Vb6Ide from './Vb6Ide.jsx';
 
@@ -102,9 +104,8 @@ const App = () => {
                     Product Inventory Management System
                   </span>
                 </Button>
-
-               {/* <Button 
-                  onClick={() => setCurrentApp('product')}
+                <Button 
+                  onClick={() => setCurrentApp('library')}
                   style={{ 
                     padding: '16px', 
                     fontSize: 14,
@@ -114,11 +115,28 @@ const App = () => {
                     height: 'auto'
                   }}
                 >
-                  <strong>Product Manager</strong>
+                  <strong>Library Manager</strong>
                   <span style={{ fontSize: 11, marginTop: 4 }}>
-                    Product  Management System
+                    Library Management System
                   </span>
-                </Button> */}
+                </Button>
+
+                <Button 
+                  onClick={() => setCurrentApp('myhtml')}
+                  style={{ 
+                    padding: '16px', 
+                    fontSize: 14,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    height: 'auto'
+                  }}
+                >
+                  <strong>Project Manager</strong>
+                  <span style={{ fontSize: 11, marginTop: 4 }}>
+                    Project Management System
+                  </span>
+                </Button>
 
                 <div style={{ 
                   marginTop: 'auto', 
@@ -137,7 +155,7 @@ const App = () => {
           <div>
             <div style={{
               position: 'fixed',
-              top: 30,
+              top: 50,
               left: 10,
               zIndex: 20000
             }}>
@@ -164,9 +182,9 @@ const App = () => {
             </div>
           </div>
         )}
-        {currentApp === 'product' && (
+        {currentApp === 'project' && (
           <div>
-            <ProductManager />
+            <ProjectManagerApp />
             <div style={{
               position: 'fixed',
               top: 50,
@@ -179,6 +197,47 @@ const App = () => {
             </div>
           </div>
         )}
+        {currentApp === 'library' && (
+          <div>
+            <LibraryApp/>
+            <div style={{
+              position: 'fixed',
+              top: 50,
+              left: 10,
+              zIndex: 20000
+            }}>
+              <Button onClick={() => setCurrentApp('launcher')}>
+                ← Back to Launcher
+              </Button>
+            </div>
+          </div>
+        )}
+         {currentApp === 'myhtml' && (
+  <div>
+     <iframe 
+      src="/myfile.html" 
+      style={{ 
+        width: '100vw', 
+        height: '100vh', 
+        border: 'none' 
+      }}
+      title="My VB App"
+    /> 
+     {/* <MyHtmlComponent /> */}
+    <div style={{
+      position: 'fixed',
+      top: 10,
+      left: 100,
+      zIndex: 20000
+    }}>
+   
+      <Button onClick={() => setCurrentApp('launcher')}>
+        ← Back to Launcher
+      </Button>
+    </div>
+  </div>
+)}
+        
       </ThemeProvider>
     </div>
   );

@@ -118,7 +118,7 @@ const CONTROL_TYPES = {
                 style={{ width: "100%", height: "100%", ...styleProps }}
               >
                 <option value="Electronics">Electronics</option>
-                <option value="Furniture">Furniture</option>
+                {/* <option value="Furniture">Furniture</option> */}
                 </select>
     ),
   },
@@ -170,13 +170,35 @@ const CONTROL_TYPES = {
     icon: <WindowsExplorer variant="32x32_4" />,
     // icon: <img src="/picture.png" alt="" style={{ width: 32, height: 32 }} />, 
     element: ({ text, handlers, styleProps }) => (
-      <GroupBox
+      <div
         {...(handlers || {})}
-        label={text || "Frame"}
-        style={{ width: "100%", height: "100%", padding: 8, ...styleProps }}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "2px solid",
+          borderColor: "#808080 #ffffff #ffffff #808080",
+          padding: "16px 10px 10px 10px",
+          position: "relative",
+          background: "#c0c0c0",
+          ...styleProps,
+        }}
       >
+        <div
+          style={{
+            position: "absolute",
+            top: -8,
+            left: 8,
+            background: "#c0c0c0",
+            padding: "0 4px",
+            fontSize: 11,
+            color: "#000080",
+            fontWeight: "normal",
+          }}
+        >
+          {text || "Frame"}
+        </div>
         {/* Empty container for grouping */}
-      </GroupBox>
+      </div>
     ),
   },
   image: {
@@ -217,18 +239,56 @@ const CONTROL_TYPES = {
       </div>
     ),
   },
-  // menulist: {
-  //   label: "MenuList",
-  //   icon: <img src="/menu.png" alt="" style={{ width: 32, height: 32 }} />,
-  //   element: ({ text, handlers, styleProps }) => (
-  //     <MenuList {...(handlers || {})} style={{ width: "100%", height: "100%", ...styleProps }}>
-  //       <MenuListItem>File</MenuListItem>
-  //       <MenuListItem>Edit</MenuListItem>
-  //       <MenuListItem>View</MenuListItem>
-  //       <MenuListItem>Help</MenuListItem>
-  //     </MenuList>
-  //   ),
-  // },
+  tabs: {
+    label: "Tabs",
+    icon: <img src="/tabs.png" alt="" style={{ width: 32, height: 32 }} />,
+    element: ({ text, handlers, styleProps }) => (
+      <div {...(handlers || {})} style={{ width: "100%", height: "100%", ...styleProps }}>
+        <Tabs defaultValue={0} style={{ width: "100%", height: "100%" }}>
+          <Tab value={0}>Tab 1</Tab>
+          <Tab value={1}>Tab 2</Tab>
+          <Tab value={2}>Tab 3</Tab>
+        </Tabs>
+        <div style={{ padding: 8, background: "#c0c0c0", height: "calc(100% - 30px)" }}>
+          <div style={{ fontSize: 11 }}>Tab content area</div>
+        </div>
+      </div>
+    ),
+  },
+  statusbar: {
+    label: "StatusBar",
+    icon: <img src="/status.png" alt="" style={{ width: 32, height: 32 }} />,
+    element: ({ text, handlers, styleProps }) => (
+      <div
+        {...(handlers || {})}
+        style={{
+          width: "100%",
+          height: "100%",
+          background: "#c0c0c0",
+          border: "2px inset #808080",
+          display: "flex",
+          alignItems: "center",
+          padding: "2px 4px",
+          fontSize: 11,
+          fontFamily: "ms_sans_serif",
+          ...styleProps,
+        }}
+      >
+        {/* <div class="status-bar" style={{bordertop: '1px solid #808080',padding: '2px 4px',fontsize: '11px',display: 'flex',gap: '4px' }}>
+            <div class="status-panel">{text || "Ready"}</div>
+            <div class="status-panel" style={{flex: "0 0 150px" }}>Tasks: 6 | Complete: 1</div>
+            <div class="status-panel" style={{flex: "0 0 100px"}}>65% Done</div>
+        </div> */}
+       <div style={{ borderRight: "2px outset #808080", paddingRight: 8, marginRight: 8 }}>
+          {text || "Ready"}
+        </div>
+        <div style={{ borderRight: "2px outset #808080", paddingRight: 8, marginRight: 8 }}>
+          Panel 2
+        </div>
+        <div>Panel 3</div> 
+      </div>
+    ),
+  },
 };
 
 /* ---------- helper: runtime handler compiler ---------- */
@@ -262,16 +322,20 @@ function compileHandlers(handlers = {}) {
   return out;
 }
 
-/* ---------- Code Window (JS handlers) ---------- */
-function CodeWindowJS({ selected, events, setEvents }) {
+/* ---------- Code Window (VB6-Style with Event Dropdown) ---------- */
+function CodeWindowJS({ selected, events, setEvents, controls }) {
   const [activeTab, setActiveTab] = useState("general");
+  const [selectedEvent, setSelectedEvent] = useState("onClick");
+
+  // Available events
+  const availableEvents = ["onClick", "onChange", "onKeyPress", "onFocus", "onBlur", "onMouseEnter", "onMouseLeave"];
 
   useEffect(() => {
     if (selected) setActiveTab("events");
     else setActiveTab("general");
   }, [selected]);
 
-  const controlEvents = (selected && events[selected.id]) || { onClick: "(e) => {}" };
+  const controlEvents = (selected && events[selected.id]) || {};
 
   const updateEvent = (name, value) => {
     if (!selected) return;
@@ -317,40 +381,64 @@ function CodeWindowJS({ selected, events, setEvents }) {
               {!selected && <div style={{ color: "#666" }}>Select a control to edit its events.</div>}
               {selected && (
                 <>
-                  <div style={{ marginBottom: 6 }}>
-                    <b>onClick</b>
-                    <textarea
-                      value={(events[selected.id] && events[selected.id].onClick) || ""}
-                      onChange={(e) => updateEvent("onClick", e.target.value)}
-                      placeholder={`(e) => { alert("clicked"); }`}
-                      style={{
-                        width: "100%",
-                        height: 160,
-                        marginTop: 6,
-                        border: "1px solid #808080",
-                        background: "#ffffe0",
-                        fontFamily: "Consolas, monospace",
-                        fontSize: 13,
-                        padding: 8,
-                      }}
-                    />
+                  {/* VB6-Style Event Dropdowns */}
+                  <div style={{ display: "flex", gap: 8, marginBottom: 8, background: "#c0c0c0", padding: 4 }}>
+                    <div style={{ flex: 1 }}>
+                      <label style={{ fontSize: 10, display: "block" }}>Object:</label>
+                      <select
+                        value={selected.id}
+                        style={{
+                          width: "100%",
+                          padding: 2,
+                          border: "2px inset #808080",
+                          background: "white",
+                          fontFamily: "ms_sans_serif",
+                          fontSize: 11,
+                        }}
+                        disabled
+                      >
+                        <option value={selected.id}>{selected.text || selected.type}</option>
+                      </select>
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <label style={{ fontSize: 10, display: "block" }}>Event:</label>
+                      <select
+                        value={selectedEvent}
+                        onChange={(e) => setSelectedEvent(e.target.value)}
+                        style={{
+                          width: "100%",
+                          padding: 2,
+                          border: "2px inset #808080",
+                          background: "white",
+                          fontFamily: "ms_sans_serif",
+                          fontSize: 11,
+                        }}
+                      >
+                        {availableEvents.map(event => (
+                          <option key={event} value={event}>{event}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
+                  {/* Event Handler Code Editor */}
                   <div style={{ marginBottom: 6 }}>
-                    <b>onChange</b>
+                    <div style={{ fontSize: 11, color: "#666", marginBottom: 4 }}>
+                      {selected.text || selected.type}_{selectedEvent}
+                    </div>
                     <textarea
-                      value={(events[selected.id] && events[selected.id].onChange) || ""}
-                      onChange={(e) => updateEvent("onChange", e.target.value)}
-                      placeholder={`(e) => { console.log(e.target.value); }`}
+                      value={(events[selected.id] && events[selected.id][selectedEvent]) || ""}
+                      onChange={(e) => updateEvent(selectedEvent, e.target.value)}
+                      placeholder={`(e) => { /* ${selectedEvent} handler */ }`}
                       style={{
                         width: "100%",
-                        height: 120,
-                        marginTop: 6,
+                        height: 280,
                         border: "1px solid #808080",
                         background: "#ffffe0",
                         fontFamily: "Consolas, monospace",
                         fontSize: 13,
                         padding: 8,
+                        resize: "vertical",
                       }}
                     />
                   </div>
@@ -378,12 +466,14 @@ export default function VB6DesignerRunnable() {
   const [events, setEvents] = useState({});
   const [generatedCode, setGeneratedCode] = useState("");
   const [jsxPreviewOpen, setJsxPreviewOpen] = useState(false);
+  const [projectExplorerOpen, setProjectExplorerOpen] = useState(false);
 
-  // floating window rects
-  const [toolboxRect, setToolboxRect] = useState({ x: 16, y: 56, w: 180, h: 260 });
-  const [propertiesRect, setPropertiesRect] = useState({ x: 920, y: 56, w: 420, h: 450 });
-  const [codeRect, setCodeRect] = useState({ x: 920, y: 400, w: 420, h: 420 });
-  const [formRect, setFormRect] = useState({ x: 220, y: 56, w: 760, h: 640 });
+  // floating window rects (adjusted for menu bar + toolbar)
+  const [toolboxRect, setToolboxRect] = useState({ x: 16, y: 76, w: 180, h: 260 });
+  const [projectExplorerRect, setProjectExplorerRect] = useState({ x: 1100, y: 76, w: 320, h: 300 });
+  const [propertiesRect, setPropertiesRect] = useState({ x: 1100, y: 390, w: 360, h: 450 });
+  const [codeRect, setCodeRect] = useState({ x: 920, y: 540, w: 420, h: 300 });
+  const [formRect, setFormRect] = useState({ x: 220, y: 76, w: 760, h: 640 });
 
   const selected = controls.find((c) => c.id === selectedId);
 
@@ -413,6 +503,12 @@ export default function VB6DesignerRunnable() {
     } else if (type === 'menulist') {
       width = 200;
       height = 120;
+    } else if (type === 'tabs') {
+      width = 300;
+      height = 200;
+    } else if (type === 'statusbar') {
+      width = 400;
+      height = 25;
     }
     
     const ctrl = {
@@ -567,13 +663,41 @@ import { Button, TextField } from "react95";\n\n`;
   return (
     <ThemeProvider theme={original}>
       <div style={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden", background: "#003333" }}>
-        {/* Top Menu Bar */}
+        {/* VB6-Style Menu Bar */}
         <div style={{ 
           position: "fixed", 
           top: 0, 
           left: 0, 
           right: 0, 
-          height: 40, 
+          height: 20, 
+          background: "#c0c0c0", 
+          borderBottom: "1px solid #808080",
+          display: "flex",
+          alignItems: "center",
+          padding: "0 4px",
+          fontSize: 14,
+          fontFamily: "ms_sans_serif",
+          zIndex: 10001
+        }}>
+          <div style={{ padding: "2px 8px", cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.background = "#000080"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>File</div>
+          <div style={{ padding: "2px 8px", cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.background = "#000080"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>Edit</div>
+          <div style={{ padding: "2px 8px", cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.background = "#000080"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>View</div>
+          <div style={{ padding: "2px 8px", cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.background = "#000080"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>Project</div>
+          <div style={{ padding: "2px 8px", cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.background = "#000080"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>Format</div>
+          <div style={{ padding: "2px 8px", cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.background = "#000080"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>Debug</div>
+          <div style={{ padding: "2px 8px", cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.background = "#000080"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>Run</div>
+          <div style={{ padding: "2px 8px", cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.background = "#000080"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>Tools</div>
+          <div style={{ padding: "2px 8px", cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.background = "#000080"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>Window</div>
+          <div style={{ padding: "2px 8px", cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.background = "#000080"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>Help</div>
+        </div>
+
+        {/* Toolbar (below menu) */}
+        <div style={{ 
+          position: "fixed", 
+          top: 20, 
+          left: 0, 
+          right: 0, 
+          height: 36, 
           background: "#c0c0c0", 
           borderBottom: "2px solid #808080",
           display: "flex",
@@ -582,14 +706,24 @@ import { Button, TextField } from "react95";\n\n`;
           gap: 8,
           zIndex: 10000
         }}>
-           <Button size="sm" onClick={() => setRunMode((r) => !r)} style={{ minWidth: 50, padding: "2px 8px" }}>
+          {/* Run/Stop Group */}
+          <Button size="sm" onClick={() => setRunMode((r) => !r)} style={{ minWidth: 50, padding: "2px 8px" }}>
             {runMode ? "Stop" : "Run"}  
           </Button> 
-          {/* <Button onClick={() => setCurrentProject("InventoryApp")}>Run</Button> */}
           <Button onClick={() => setCurrentProject(null)}>Stop</Button>
+          
+          {/* Separator */}
+          <div style={{ width: 2, height: 24, background: "#808080", margin: "0 4px" }} />
+          
+          {/* Edit Group */}
           <Button size="sm" onClick={() => setControls([])} style={{ minWidth: 50, padding: "2px 8px" }}>
             Clear
           </Button>
+          
+          {/* Separator */}
+          <div style={{ width: 2, height: 24, background: "#808080", margin: "0 4px" }} />
+          
+          {/* File Operations Group */}
           <Button size="sm" onClick={handleSave} style={{ minWidth: 60, padding: "2px 8px" }}>
             <Diskcopy1 variant="16x16_4" /> Save
           </Button>
@@ -611,8 +745,21 @@ import { Button, TextField } from "react95";\n\n`;
           >
             <FolderOpen variant="16x16_4" /> Load
           </Button>
+          
+          {/* Separator */}
+          <div style={{ width: 2, height: 24, background: "#808080", margin: "0 4px" }} />
+          
+          {/* Code Generation Group */}
           <Button size="sm" onClick={generateReact95JSX} style={{ minWidth: 100, padding: "2px 8px" }}>
             Generate JSX
+          </Button>
+          
+          {/* Separator */}
+          <div style={{ width: 2, height: 24, background: "#808080", margin: "0 4px" }} />
+          
+          {/* View Group */}
+          <Button size="sm" onClick={() => setProjectExplorerOpen(!projectExplorerOpen)} style={{ minWidth: 120, padding: "2px 8px" }}>
+            {projectExplorerOpen ? "Hide Explorer" : "Show Explorer"}
           </Button>
 
           {/* Runtime Window */}
@@ -642,12 +789,12 @@ import { Button, TextField } from "react95";\n\n`;
           <Window style={{ width: "100%", height: "100%" }}>
             <WindowHeader className="form-window-header">Form Designer</WindowHeader>
 
-            <WindowContent style={{ height: "100%" }}>
+            <WindowContent style={{ height: "100%", display: "flex", flexDirection: "column" }}>
               <Toolbar>
                 <span style={{ fontSize: 12 }}>Designer toolbar</span>
               </Toolbar>
 
-              <div style={{ position: "relative", height: "85%", marginTop: 8, background: "#c0c0c0", border: "2px inset #808080", overflow: "hidden", cursor: runMode ? "default" : "crosshair" }}>
+              <div style={{ position: "relative", flex: 1, marginTop: 8, background: "#c0c0c0", border: "2px inset #808080", overflow: "hidden", cursor: runMode ? "default" : "crosshair" }}>
                 {controls.map((c) => {
                   const CompDef = CONTROL_TYPES[c.type];
                   const handlers = runtimeHandlers(c.id); // compiled functions
@@ -679,6 +826,50 @@ import { Button, TextField } from "react95";\n\n`;
                   );
                 })}
               </div>
+
+              {/* Status Bar */}
+              <div
+                style={{
+                  background: "#c0c0c0",
+                  borderTop: "1px solid #808080",
+                  padding: "2px 4px",
+                  fontSize: 11,
+                  display: "flex",
+                  gap: 4,
+                  marginTop: 8,
+                }}
+              >
+                <div
+                  style={{
+                    border: "1px solid",
+                    borderColor: "#808080 #ffffff #ffffff #808080",
+                    padding: "1px 4px",
+                    flex: 1,
+                  }}
+                >
+                  {runMode ? "Run Mode" : "Design Mode"}
+                </div>
+                <div
+                  style={{
+                    border: "1px solid",
+                    borderColor: "#808080 #ffffff #ffffff #808080",
+                    padding: "1px 4px",
+                    flex: "0 0 150px",
+                  }}
+                >
+                  Controls: {controls.length}
+                </div>
+                <div
+                  style={{
+                    border: "1px solid",
+                    borderColor: "#808080 #ffffff #ffffff #808080",
+                    padding: "1px 4px",
+                    flex: "0 0 200px",
+                  }}
+                >
+                  {selected ? `Selected: ${selected.text || selected.type}` : "No selection"}
+                </div>
+              </div>
             </WindowContent>
           </Window>
         </Rnd>
@@ -699,6 +890,96 @@ import { Button, TextField } from "react95";\n\n`;
             </WindowContent>
           </Window>
         </Rnd>
+
+        {/* Project Explorer */}
+        {projectExplorerOpen && (
+          <Rnd 
+            size={{ width: projectExplorerRect.w, height: projectExplorerRect.h }} 
+            position={{ x: projectExplorerRect.x, y: projectExplorerRect.y }} 
+            bounds="parent" 
+            dragHandleClassName="drag-handle"
+            onDragStop={(e, d) => setProjectExplorerRect((r) => ({ ...r, x: d.x, y: d.y }))} 
+            onResizeStop={(e, dir, ref, delta, pos) => setProjectExplorerRect({ x: pos.x, y: pos.y, w: ref.offsetWidth, h: ref.offsetHeight })} 
+            minWidth={200} 
+            minHeight={150}
+          >
+          <Window style={{ width: "100%", height: "100%", background: "#e5e3e3ff" }}>
+            <WindowHeader className="drag-handle">Project - Project1</WindowHeader>
+            <WindowContent style={{ background: "#e8e4e4ff", padding: 4 }}>
+              <div style={{ fontSize: 11, fontFamily: "ms_sans_serif" }}>
+                {/* Project Tree */}
+                <div style={{ marginBottom: 4 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 4, padding: 2 }}>
+                    <span>📁</span>
+                    <strong>Project1 (Project1)</strong>
+                  </div>
+                </div>
+                
+                <div style={{ marginLeft: 16 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 4, padding: 2 }}>
+                    <span>📁</span>
+                    <span>Forms</span>
+                  </div>
+                  
+                  <div style={{ marginLeft: 16 }}>
+                    <div 
+                      style={{ 
+                        display: "flex", 
+                        alignItems: "center", 
+                        gap: 4, 
+                        padding: 2,
+                        background: selectedId ? "transparent" : "#000080",
+                        color: selectedId ? "black" : "white",
+                        cursor: "pointer"
+                      }}
+                      onClick={() => setSelectedId(null)}
+                    >
+                      <span>📄</span>
+                      <span>Form1 (Form1)</span>
+                    </div>
+                    
+                    {/* Controls List */}
+                    {controls.length > 0 && (
+                      <div style={{ marginLeft: 16, marginTop: 4 }}>
+                        <div style={{ fontSize: 10, color: "#666", marginBottom: 2 }}>Controls:</div>
+                        {controls.map((control) => (
+                          <div
+                            key={control.id}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 4,
+                              padding: "2px 4px",
+                              background: selectedId === control.id ? "#000080" : "transparent",
+                              color: selectedId === control.id ? "white" : "black",
+                              cursor: "pointer",
+                              fontSize: 10,
+                            }}
+                            onClick={() => setSelectedId(control.id)}
+                          >
+                            <span>
+                              {control.type === 'button' && '🔘'}
+                              {control.type === 'label' && '📝'}
+                              {control.type === 'textbox' && '📝'}
+                              {control.type === 'combobox' && '📋'}
+                              {control.type === 'checkbox' && '☑️'}
+                              {control.type === 'table' && '📊'}
+                              {control.type === 'frame' && '🖼️'}
+                              {control.type === 'image' && '🖼️'}
+                              {control.type === 'menulist' && '📋'}
+                            </span>
+                            <span>{control.text || control.type}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </WindowContent>
+          </Window>
+        </Rnd>
+        )}
 
         {/* Floating Properties */}
         <Rnd size={{ width: propertiesRect.w, height: propertiesRect.h }} position={{ x: propertiesRect.x, y: propertiesRect.y }} bounds="parent" onDragStop={(e, d) => setPropertiesRect((r) => ({ ...r, x: d.x, y: d.y }))} onResizeStop={(e, dir, ref, delta, pos) => setPropertiesRect({ x: pos.x, y: pos.y, w: ref.offsetWidth, h: ref.offsetHeight })} minWidth={260} minHeight={220}>
@@ -767,7 +1048,7 @@ import { Button, TextField } from "react95";\n\n`;
 
         {/* Floating Code Window */}
         <Rnd size={{ width: codeRect.w, height: codeRect.h }} position={{ x: codeRect.x, y: codeRect.y }} bounds="parent" onDragStop={(e, d) => setCodeRect((r) => ({ ...r, x: d.x, y: d.y }))} onResizeStop={(e, dir, ref, delta, pos) => setCodeRect({ x: pos.x, y: pos.y, w: ref.offsetWidth, h: ref.offsetHeight })} minWidth={320} minHeight={240}>
-          <CodeWindowJS selected={selected} events={events} setEvents={setEvents} />
+          <CodeWindowJS selected={selected} events={events} setEvents={setEvents} controls={controls} />
         </Rnd>
 
         {/* JSX Preview Modal */}

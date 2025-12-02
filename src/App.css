@@ -36,3 +36,70 @@
     transform: rotate(360deg);
   }
 }
+
+.menu-bar {
+            background: #c0c0c0;
+            padding: 2px;
+            border-bottom: 1px solid #808080;
+            font-size: 11px;
+        }
+
+        .menu-bar span {
+            padding: 3px 8px;
+            cursor: pointer;
+        }
+
+        .menu-bar span:hover {
+            background: #000080;
+            color: white;
+        }
+
+        .menu-bar span u {
+            text-decoration: underline;
+        }
+
+        .toolbar {
+            background: #c0c0c0;
+            padding: 4px;
+            border-bottom: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            display: flex;
+            gap: 2px;
+        }
+         .tool-button {
+            width: 24px;
+            height: 24px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #ffffff #000000 #000000 #ffffff;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-button:active {
+            border-color: #000000 #ffffff #ffffff #000000;
+        }
+
+        .separator {
+            width: 2px;
+            background: #808080;
+            margin: 0 2px;
+        }
+        .status-bar {
+            background: #c0c0c0;
+            border-top: 1px solid #808080;
+            padding: 2px 4px;
+            font-size: 11px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .status-panel {
+            border: 1px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            padding: 1px 4px;
+            flex: 1;
+        }

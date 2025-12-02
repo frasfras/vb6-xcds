@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Manager Pro - VB6 Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'MS Sans Serif', 'Microsoft Sans Serif', Tahoma, sans-serif;
+            background: #008080;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .window {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #000000 #000000 #ffffff;
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+            width: 800px;
+            max-width: 100%;
+        }
+
+        .title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 3px 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .title-bar-text {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .title-icon {
+            width: 16px;
+            height: 16px;
+            background: #ffffff;
+            border: 1px solid #000;
+        }
+
+        .title-buttons {
+            display: flex;
+            gap: 2px;
+        }
+
+        .title-button {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #ffffff #000000 #000000 #ffffff;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title-button:active {
+            border-color: #000000 #ffffff #ffffff #000000;
+        }
+
+        .menu-bar {
+            background: #c0c0c0;
+            padding: 2px;
+            border-bottom: 1px solid #808080;
+            font-size: 11px;
+        }
+
+        .menu-bar span {
+            padding: 3px 8px;
+            cursor: pointer;
+        }
+
+        .menu-bar span:hover {
+            background: #000080;
+            color: white;
+        }
+
+        .menu-bar span u {
+            text-decoration: underline;
+        }
+
+        .toolbar {
+            background: #c0c0c0;
+            padding: 4px;
+            border-bottom: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            display: flex;
+            gap: 2px;
+        }
+
+        .tool-button {
+            width: 24px;
+            height: 24px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #ffffff #000000 #000000 #ffffff;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-button:active {
+            border-color: #000000 #ffffff #ffffff #000000;
+        }
+
+        .separator {
+            width: 2px;
+            background: #808080;
+            margin: 0 2px;
+        }
+
+        .content {
+            padding: 10px;
+            background: #c0c0c0;
+        }
+
+        .frame {
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .frame-title {
+            position: absolute;
+            top: -8px;
+            left: 8px;
+            background: #c0c0c0;
+            padding: 0 4px;
+            font-size: 11px;
+            color: #000080;
+        }
+
+        .label {
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+        .textbox, .combobox {
+            background: white;
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            padding: 2px 4px;
+            font-size: 11px;
+            font-family: 'MS Sans Serif', Tahoma, sans-serif;
+            width: 100%;
+        }
+
+        .combobox {
+            appearance: none;
+            background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><path d="M2 4 L6 8 L10 4" fill="none" stroke="black" stroke-width="1"/></svg>') no-repeat right 2px center;
+            padding-right: 20px;
+        }
+
+        .button {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #000000 #000000 #ffffff;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-family: 'MS Sans Serif', Tahoma, sans-serif;
+            cursor: pointer;
+            min-width: 75px;
+        }
+
+        .button:active {
+            border-color: #000000 #ffffff #ffffff #000000;
+        }
+
+        .button-default {
+            border: 3px solid #000000;
+            outline: 1px dotted #000000;
+            outline-offset: -5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .listbox {
+            background: white;
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            min-height: 150px;
+            font-size: 11px;
+            overflow-y: auto;
+        }
+
+        .list-item {
+            padding: 2px 4px;
+            cursor: pointer;
+        }
+
+        .list-item:hover {
+            background: #c0c0c0;
+        }
+
+        .list-item.selected {
+            background: #000080;
+            color: white;
+        }
+
+        .status-bar {
+            background: #c0c0c0;
+            border-top: 1px solid #808080;
+            padding: 2px 4px;
+            font-size: 11px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .status-panel {
+            border: 1px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            padding: 1px 4px;
+            flex: 1;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            margin: 4px 0;
+        }
+
+        .checkbox input {
+            width: 13px;
+            height: 13px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 6px;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            background: white;
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            height: 20px;
+            margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #000080;
+            height: 100%;
+            width: 65%;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .progress-segment {
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(90deg, #000080 0%, #1084d0 50%, #000080 100%);
+            border-right: 1px solid #ffffff;
+        }
+
+        .tab-strip {
+            display: flex;
+            margin-bottom: -2px;
+        }
+
+        .tab {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #000000 #808080 #ffffff;
+            padding: 4px 16px;
+            font-size: 11px;
+            cursor: pointer;
+            border-bottom: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab.active {
+            background: #c0c0c0;
+            border-color: #ffffff #000000 transparent #ffffff;
+            z-index: 2;
+            margin-bottom: -2px;
+            padding-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">
+                <div class="title-icon"></div>
+                <span>HackProject Manager Pro v1.0</span>
+            </div>
+            <div class="title-buttons">
+                <button class="title-button">_</button>
+                <button class="title-button">□</button>
+                <button class="title-button">×</button>
+            </div>
+        </div>
+
+        <div class="menu-bar">
+            <span><u>F</u>ile</span>
+            <span><u>E</u>dit</span>
+            <span><u>V</u>iew</span>
+            <span><u>P</u>roject</span>
+            <span><u>T</u>ools</span>
+            <span><u>H</u>elp</span>
+        </div>
+
+        <div class="toolbar">
+            <button class="tool-button" title="New">📄</button>
+            <button class="tool-button" title="Open">📁</button>
+            <button class="tool-button" title="Save">💾</button>
+            <div class="separator"></div>
+            <button class="tool-button" title="Cut">✂️</button>
+            <button class="tool-button" title="Copy">📋</button>
+            <button class="tool-button" title="Paste">📌</button>
+            <div class="separator"></div>
+            <button class="tool-button" title="Run">▶️</button>
+            <button class="tool-button" title="Debug">🐛</button>
+        </div>
+
+        <div class="content">
+            <div class="tab-strip">
+                <div class="tab active">Project Info</div>
+                <div class="tab">Team Members</div>
+                <div class="tab">Statistics</div>
+            </div>
+
+            <div class="frame">
+                <div class="frame-title">Project Details</div>
+                
+                <div class="grid">
+                    <div>
+                        <div class="label">Project Name:</div>
+                        <input type="text" class="textbox" value="Hackathon 2025 Entry">
+                    </div>
+                    <div>
+                        <div class="label">Category:</div>
+                        <select class="combobox">
+                            <option>AI & Machine Learning</option>
+                            <option>Web Development</option>
+                            <option>Mobile Apps</option>
+                            <option>Blockchain</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <div class="label">Description:</div>
+                    <textarea class="textbox" rows="3" style="resize: vertical;">Revolutionary project management tool with AI-powered insights and real-time collaboration features.</textarea>
+                </div>
+
+                <div class="checkbox">
+                    <input type="checkbox" checked id="cb1">
+                    <label for="cb1">Enable AI Suggestions</label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" checked id="cb2">
+                    <label for="cb2">Auto-save Progress</label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="cb3">
+                    <label for="cb3">Advanced Analytics</label>
+                </div>
+            </div>
+
+            <div class="frame">
+                <div class="frame-title">Task Progress</div>
+                
+                <div class="listbox">
+                    <div class="list-item selected">✓ Project Planning - Complete</div>
+                    <div class="list-item">⚙ Backend Development - In Progress</div>
+                    <div class="list-item">⚙ Frontend Design - In Progress</div>
+                    <div class="list-item">⏳ Testing Phase - Pending</div>
+                    <div class="list-item">⏳ Documentation - Pending</div>
+                    <div class="list-item">⏳ Final Presentation - Pending</div>
+                </div>
+
+                <div class="label" style="margin-top: 10px;">Overall Completion:</div>
+                <div class="progress-bar">
+                    <div class="progress-fill">
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="button">Generate Report</button>
+                <button class="button">Export Data</button>
+                <button class="button button-default">Submit Project</button>
+                <button class="button">Cancel</button>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-panel">Ready</div>
+            <div class="status-panel" style="flex: 0 0 150px;">Tasks: 6 | Complete: 1</div>
+            <div class="status-panel" style="flex: 0 0 100px;">65% Done</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,221 @@
+{
+  "controls": [
+    {
+      "id": 1764126499235,
+      "type": "label",
+      "x": 256,
+      "y": 32,
+      "width": 150,
+      "height": 43,
+      "text": " Book Titles",
+      "fontSize": 29,
+      "handlers": {}
+    },
+    {
+      "id": 1764126700004,
+      "type": "label",
+      "x": 27,
+      "y": 95,
+      "width": 120,
+      "height": 30,
+      "text": "Title",
+      "fontSize": 16,
+      "handlers": {}
+    },
+    {
+      "id": 1764126772580,
+      "type": "textbox",
+      "x": 158,
+      "y": 94.00001525878906,
+      "width": 473,
+      "height": 91,
+      "text": "dBASE IV  ",
+      "fontSize": 16,
+      "handlers": {}
+    },
+    {
+      "id": 1764126976424,
+      "type": "frame",
+      "x": 30,
+      "y": 200,
+      "width": 671,
+      "height": 157,
+      "text": ".",
+      "fontSize": 12,
+      "handlers": {}
+    },
+    {
+      "id": 1764127088476,
+      "type": "label",
+      "x": 53,
+      "y": 231,
+      "width": 104,
+      "height": 30,
+      "text": "Year Published",
+      "fontSize": 14,
+      "handlers": {}
+    },
+    {
+      "id": 1764127175638,
+      "type": "textbox",
+      "x": 158,
+      "y": 234,
+      "width": 120,
+      "height": 31,
+      "text": "1985",
+      "fontSize": 16,
+      "handlers": {}
+    },
+    {
+      "id": 1764127249254,
+      "type": "label",
+      "x": 291,
+      "y": 229,
+      "width": 50,
+      "height": 30,
+      "text": "ISBN",
+      "fontSize": 16,
+      "handlers": {}
+    },
+    {
+      "id": 1764127322288,
+      "type": "textbox",
+      "x": 334,
+      "y": 232,
+      "width": 342,
+      "height": 33,
+      "text": "0-0038700-5",
+      "fontSize": 16,
+      "handlers": {}
+    },
+    {
+      "id": 1764127480822,
+      "type": "label",
+      "x": 56,
+      "y": 285,
+      "width": 95,
+      "height": 30,
+      "text": "Publisher's ID",
+      "fontSize": 14,
+      "handlers": {}
+    },
+    {
+      "id": 1764127536687,
+      "type": "textbox",
+      "x": 159,
+      "y": 280,
+      "width": 122,
+      "height": 31,
+      "text": "465",
+      "fontSize": 16,
+      "handlers": {}
+    },
+    {
+      "id": 1764127642183,
+      "type": "label",
+      "x": 286,
+      "y": 280,
+      "width": 46,
+      "height": 30,
+      "text": "Subject",
+      "fontSize": 16,
+      "handlers": {}
+    },
+    {
+      "id": 1764127733439,
+      "type": "textbox",
+      "x": 348,
+      "y": 282,
+      "width": 120,
+      "height": 30,
+      "text": "N/A",
+      "fontSize": 16,
+      "handlers": {}
+    },
+    {
+      "id": 1764127857155,
+      "type": "button",
+      "x": 66,
+      "y": 407,
+      "width": 86,
+      "height": 40,
+      "text": "Save",
+      "fontSize": 12,
+      "handlers": {}
+    },
+    {
+      "id": 1764127895206,
+      "type": "button",
+      "x": 157,
+      "y": 407,
+      "width": 111,
+      "height": 40,
+      "text": "Add",
+      "fontSize": 12,
+      "handlers": {}
+    },
+    {
+      "id": 1764127968606,
+      "type": "button",
+      "x": 274,
+      "y": 408,
+      "width": 94,
+      "height": 40,
+      "text": "Delete",
+      "fontSize": 12,
+      "handlers": {}
+    },
+    {
+      "id": 1764128032097,
+      "type": "button",
+      "x": 377,
+      "y": 408,
+      "width": 94,
+      "height": 40,
+      "text": "Cancel",
+      "fontSize": 12,
+      "handlers": {}
+    },
+    {
+      "id": 1764128160166,
+      "type": "button",
+      "x": 509,
+      "y": 410,
+      "width": 55,
+      "height": 40,
+      "text": "<",
+      "fontSize": 12,
+      "handlers": {}
+    },
+    {
+      "id": 1764128216843,
+      "type": "button",
+      "x": 572,
+      "y": 410,
+      "width": 55,
+      "height": 40,
+      "text": ">",
+      "fontSize": 12,
+      "handlers": {}
+    },
+    {
+      "id": 1764128366014,
+      "type": "button",
+      "x": 637,
+      "y": 410,
+      "width": 55,
+      "height": 41,
+      "text": "Exit",
+      "fontSize": 12,
+      "handlers": {}
+    }
+  ],
+  "events": {
+    "1764127857155": {
+      "onClick": "const handleButton1Click = () => {\n  alert(\"Hello from VB6-style React!\");\n};\n"
+    },
+    "1764127895206": {
+      "onClick": "(e) => {alert('clicked')}"
+    }
+  }
+}

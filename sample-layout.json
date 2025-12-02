@@ -1,0 +1,95 @@
+{
+  "controls": [
+    {
+      "id": 1701234567890,
+      "type": "label",
+      "x": 10,
+      "y": 10,
+      "width": 600,
+      "height": 30,
+      "text": "Menu Bar (File Edit View Help)",
+      "fontSize": 14
+    },
+    {
+      "id": 1701234567891,
+      "type": "statusbar",
+      "x": 10,
+      "y": 50,
+      "width": 600,
+      "height": 30,
+      "text": "Toolbar",
+      "fontSize": 12
+    },
+    {
+      "id": 1701234567892,
+      "type": "frame",
+      "x": 10,
+      "y": 90,
+      "width": 280,
+      "height": 200,
+      "text": "Frame 1",
+      "fontSize": 12
+    },
+    {
+      "id": 1701234567893,
+      "type": "frame",
+      "x": 310,
+      "y": 90,
+      "width": 280,
+      "height": 200,
+      "text": "Frame 2",
+      "fontSize": 12
+    },
+    {
+      "id": 1701234567894,
+      "type": "tabs",
+      "x": 10,
+      "y": 310,
+      "width": 580,
+      "height": 200,
+      "text": "Tabs Control",
+      "fontSize": 12
+    },
+    {
+      "id": 1701234567895,
+      "type": "button",
+      "x": 620,
+      "y": 90,
+      "width": 120,
+      "height": 35,
+      "text": "Button 1",
+      "fontSize": 12
+    },
+    {
+      "id": 1701234567896,
+      "type": "button",
+      "x": 620,
+      "y": 140,
+      "width": 120,
+      "height": 35,
+      "text": "Button 2",
+      "fontSize": 12
+    },
+    {
+      "id": 1701234567897,
+      "type": "button",
+      "x": 620,
+      "y": 190,
+      "width": 120,
+      "height": 35,
+      "text": "Button 3",
+      "fontSize": 12
+    }
+  ],
+  "events": {
+    "1701234567895": {
+      "onClick": "(e) => { alert('Button 1 clicked!'); }"
+    },
+    "1701234567896": {
+      "onClick": "(e) => { alert('Button 2 clicked!'); }"
+    },
+    "1701234567897": {
+      "onClick": "(e) => { alert('Button 3 clicked!'); }"
+    }
+  }
+}

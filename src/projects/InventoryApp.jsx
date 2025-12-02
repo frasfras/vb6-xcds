@@ -240,7 +240,7 @@ export default function InventoryApp() {
       -------------------------- */}
       {statsOpen && (
         <Rnd
-          default={{ x: 20, y: 60, width: 300, height: 180 }}
+          default={{ x: 20, y: 69, width: 300, height: 180 }}
           dragHandleClassName="drag-handle"
         >
           <Window style={{ width: "100%", height: "100%" }}>
