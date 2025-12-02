@@ -59,7 +59,7 @@ const App = () => {
             alignItems: 'center', 
             justifyContent: 'center' 
           }}>
-            <Window style={{ width: 400, height: 300 }}>
+            <Window style={{ width: 400, height: 450 }}>
               <WindowHeader>Application Launcher</WindowHeader>
               <WindowContent style={{ 
                 display: 'flex', 
