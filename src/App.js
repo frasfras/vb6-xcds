@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuList, MenuListItem, Separator, styleReset } from 'react95';
+import { styleReset } from 'react95';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 /* Pick a theme of your choice */
@@ -12,7 +12,7 @@ import VB6DesignerRunnable from './VB6DesignerRunnable.tsx';
 import InventoryApp from './projects/InventoryApp.jsx';
 import ProjectManagerApp from './projects/ProjectManagerApp.jsx';
 import LibraryApp from './projects/LibraryApp.jsx';
-import MyProjectMgrComponent from './MyProjectMgrComponent.jsx'
+// import MyProjectMgrComponent from './MyProjectMgrComponent.jsx'
 
 // import Vb6Ide from './Vb6Ide.jsx';
 

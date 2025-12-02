@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Rnd } from "react-rnd";
 
-import LibraryApp from "./projects/LibraryApp";
+
 import InventoryApp from "./projects/InventoryApp";
 
 // react95 root imports (per your environment)
@@ -19,15 +19,15 @@ import {
   Tabs,
   Tab,
   Divider,
-  Select,
+  // Select,
   Checkbox,
   Table,
-  MenuList,
-  MenuListItem,
+  // MenuList,
+  // MenuListItem,
 } from "react95";
 
 // icons (react95 icons package)
-import {  Write1, Brush, Diskcopy1, FolderOpen, ReaderClosed, WindowsExplorer, Mspaint } from "@react95/icons";
+import { Diskcopy1, FolderOpen, WindowsExplorer } from "@react95/icons";
 
 // theme
 import { ThemeProvider } from "styled-components";

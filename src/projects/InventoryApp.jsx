@@ -7,7 +7,6 @@ import {
   WindowContent,
   Button,
   TextField,
-  Select,
 } from "react95";
 import "@react95/core/GlobalStyle";
 import "@react95/core/themes/win95.css";
