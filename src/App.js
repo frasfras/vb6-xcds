@@ -13,6 +13,7 @@ import InventoryApp from './projects/InventoryApp.jsx';
 import ProjectManagerApp from './projects/ProjectManagerApp.jsx';
 import LibraryApp from './projects/LibraryApp.jsx';
 // import MyProjectMgrComponent from './MyProjectMgrComponent.jsx'
+// import Tabs from './components/TabsExample.jsx';
 
 // import Vb6Ide from './Vb6Ide.jsx';
 

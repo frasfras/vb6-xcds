@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCrud } from '../hooks/useCrud';
+import { useCrud } from '../../.kiro/hooks';
 import { Window, WindowHeader, WindowContent, Button, TextField } from 'react95';
 
 const genId = () => 'id_' + Math.random().toString(36).slice(2);

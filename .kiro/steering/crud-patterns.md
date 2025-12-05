@@ -7,7 +7,7 @@ This project uses a reusable `useCrud` hook for all CRUD operations.
 ### Usage
 
 ```javascript
-import { useCrud } from '../hooks/useCrud';
+import { useCrud } from '../../.kiro/hooks/useCrud';
 
 const {
   items,
@@ -23,14 +23,34 @@ const {
 
 - Use `useCrud` for all entity management (Products, Categories, Suppliers)
 - Don't write manual CRUD operations
-- Keep entity-specific logic in the component
+- Keep entity-specific logic in wrapper hooks
 - Use specific hooks (useProducts, useCategories) when needed
 
-### File Location
+### File Locations
 
-- Hook implementation: `src/hooks/useCrud.js`
-- Entity-specific hooks: `src/hooks/use[EntityName].js`
+- **Kiro Hook (canonical):** `.kiro/hooks/useCrud.js`
+- **Legacy location:** `src/hooks/useCrud.js` (deprecated, use .kiro version)
+- **Entity-specific hooks:** `src/hooks/use[EntityName].js`
+- **Documentation:** `.kiro/hooks/README.md`
 
-### Example
+### Import Path
 
-See `src/projects/ProductManagerExample.jsx` for reference implementation.
+Always import from the .kiro/hooks directory:
+
+```javascript
+// ✅ Recommended (using index)
+import { useCrud } from '../../.kiro/hooks';
+
+// ✅ Also correct (direct import)
+import { useCrud } from '../../.kiro/hooks/useCrud';
+
+// ❌ Deprecated
+import { useCrud } from '../hooks/useCrud';
+```
+
+### Examples
+
+See these files for reference implementations:
+- `src/projects/InventoryApp.jsx`
+- `src/projects/ProductManagerExample.jsx`
+- `src/projects/ProjectManagerApp.jsx`
